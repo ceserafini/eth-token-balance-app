@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import {ethers} from 'ethers'
-import { Alert, AutoComplete, Button } from 'antd';
+import { Alert, Button, Dropdown, Menu } from 'antd';
 
 const ConnectWallet = () => {
 
@@ -9,6 +9,7 @@ const ConnectWallet = () => {
 	const [userBalance, setUserBalance] = useState<null | string>(null);
 	const [connButtonText, setConnButtonText] = useState<null|string>('Connect Wallet');
 	const [provider, setProvider] = useState<null | any>(null);
+	const [isConnect, setIsConnect] = useState<boolean>(false);
 
   const [visible, setVisible] = useState(false);
 
@@ -21,6 +22,7 @@ const ConnectWallet = () => {
 			window.ethereum.request({ method: 'eth_requestAccounts'})
 			.then((result: any) => {
 				setDefaultAccount(result[0]);
+				setIsConnect(true);
 			})
 			.catch((error: any) => {
 				setErrorMessage(error.message);
@@ -33,6 +35,22 @@ const ConnectWallet = () => {
 		}
 	}
 
+	const disconnectWalletHandler = () => {
+
+		window.ethereum.request({method: 'disconnect'})
+		.then((res: any)=> {
+			setProvider(null);
+			console.log("IS CONNECT?: ", window.ethereum.isConnected());
+			//TODO CONNECT
+			setIsConnect(false);
+			setDefaultAccount(null);
+			setUserBalance(null);
+			setErrorMessage(null);
+		});
+		
+
+	}
+
   const onClose = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     console.log(e, 'I was closed.');
     setVisible(false);
@@ -43,14 +61,23 @@ const ConnectWallet = () => {
 		provider.getBalance(defaultAccount)
 		.then((balanceResult: any) => {
 			setUserBalance(ethers.utils.formatEther(balanceResult));
-      setConnButtonText(defaultAccount);
+			setConnButtonText(defaultAccount);
 		})
 		};
-	}, [defaultAccount]);
+	}, [defaultAccount, isConnect]);
 	
 	return (
 		<>
-			<Button key="1" type="default" onClick={connectWalletHandler}>{connButtonText}</Button>
+			{
+				isConnect===true ?
+				<Dropdown overlay={
+					<Menu>
+						<Menu.Item onClick={disconnectWalletHandler}>{"Disconnect wallet"}</Menu.Item>
+					</Menu>}>
+					<Button>{connButtonText}</Button>
+				</Dropdown> :
+				<Button key="2" type="default" onClick={connectWalletHandler}>{connButtonText}</Button> 
+			}
 			
       { visible ?
           <Alert
