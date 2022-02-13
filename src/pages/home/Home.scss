@@ -13,3 +13,72 @@
 .site-page-header {
   border: 1px solid rgb(235, 237, 240);
 }
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+}
+
+
+.logo-animation {
+  -webkit-animation:welcome 2s 7;
+  animation:welcome 2s 7;
+  position:absolute;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+
+@keyframes welcome
+{
+  0% {
+    top:0em;
+    transform: scale3d(0.9, 0.9, 0.9)
+  }
+  
+  25% {
+    top:13em;
+    transform: scale3d(1, 1, 1)
+  }
+
+  50% {
+    top:13em;
+    transform: scale3d(1.1, 1.1, 1.1)
+  }
+
+  75%, 100% {
+    top:13em;
+    transform: scale3d(1, 1, 1)
+  }
+}
+
+@-webkit-keyframes welcome 
+{
+  0% {
+    top:0em;
+    transform: scale3d(0.9, 0.9, 0.9)
+  }
+  
+  25% {
+    top:11em;
+    transform: scale3d(1, 1, 1)
+  }
+
+  50% {
+    top:11em;
+    transform: scale3d(1.1, 1.1, 1.1)
+  }
+
+  75%, 100% {
+    top:11em;
+    transform: scale3d(1, 1, 1)
+  }
+}
+
+.welcome {
+  -webkit-animation-name: welcome;
+  animation-name: welcome;
+}

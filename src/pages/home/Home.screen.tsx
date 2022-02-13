@@ -1,5 +1,5 @@
 import './Home.scss';
-import { Layout, PageHeader, Typography, Space } from 'antd';
+import { Layout, PageHeader, Typography, Space, Image, Col, Row,} from 'antd';
 import { Content, Footer } from 'antd/lib/layout/layout';
 import { observer } from "mobx-react-lite";
 import { useWallet } from '../../context/WalletStore';
@@ -30,10 +30,18 @@ const Home = observer((): JSX.Element => {
       />
 
       <Content className="site-layout">
-        {wallet.isConnected() && <>
+        {wallet.isConnected() ? <>
           <CardBalance />
           <CardTokenContainer tokenList={tokenList} />
-        </>}
+        </> :
+        <div className="landing welcome">
+            <Image
+                width={200}
+                src={Logo}
+                className={"logo-animation"}
+              />
+        </div>
+        }
       </Content>
 
       <Footer className='text-center fixed-to-bottom'>
