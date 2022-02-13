@@ -1,5 +1,5 @@
 import './Home.scss';
-import { Layout, PageHeader, Typography, Space, Image, Col, Row,} from 'antd';
+import { Layout, PageHeader, Typography, Space, Image, Spin,} from 'antd';
 import { Content, Footer } from 'antd/lib/layout/layout';
 import { observer } from "mobx-react-lite";
 import { useWallet } from '../../context/WalletStore';
@@ -8,7 +8,6 @@ import Logo  from '../../assets/blockchain.png';
 import CardBalance from '../../components/card/CardBalance';
 import CardTokenContainer from '../../components/card/CardTokenContainer';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 // eslint-disable-next-line react/display-name
 const Home = observer((): JSX.Element => {
@@ -52,6 +51,8 @@ const Home = observer((): JSX.Element => {
           </Text>
       </Space>
       </Footer>
+
+      {wallet.isConnecting() && <Spin size="large"/>}
     </Layout>
   )
 });
