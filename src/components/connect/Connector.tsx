@@ -1,14 +1,19 @@
 import { Alert, Button, Dropdown, Menu } from "antd";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
-import { useWallet } from "../../context/Wallet.store"
+import { useEffect, useState } from "react";
+import { useWallet } from "../../context/WalletStore"
 
-const Connector = (): JSX.Element => {
+// eslint-disable-next-line react/display-name
+const Connector = observer((): JSX.Element => {
   const [isConnected, setIsConnected] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [visible, setVisible] = useState(false);
 
   const wallet = useWallet();
+
+  useEffect(() => {
+    setIsConnected(wallet.isConnected());
+  }, [wallet]);
 
   const startConnection = async () => {
     // TODO: show loader
@@ -48,6 +53,6 @@ const Connector = (): JSX.Element => {
       style={{ position: 'absolute', right: 0, left: 0, marginLeft: 'auto', marginRight: 'auto', width: '60%' }}
     />}
   </>
-}
+});
 
-export default observer(Connector);
+export default Connector;

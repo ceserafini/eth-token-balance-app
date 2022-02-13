@@ -1,5 +1,5 @@
-import { ethers } from "ethers";
 import { types } from "mobx-state-tree";
+import { ethers } from "ethers";
 
 import TokenETH from '../artifacts/contracts/TokenETH-Sandbox.sol/TokenETH.json'
 const TokenETHAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
@@ -10,21 +10,11 @@ const TokenUSDTAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 import TokenUSDC from '../artifacts/contracts/TokenUSDC-Sandbox.sol/TokenUSDC.json'
 const TokenUSDCAddress = '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0';
 
-export const Token = types
-  .model("TokenModel", {
-    logo: types.string,
-    symbol: types.string,
-    name: types.string,
-    amount: types.string,
-    usd: types.number,
-  });
-
 const createToken = async (address: string, abi: any, account: string): Promise<any> => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const contract = new ethers.Contract(address, abi, provider)
   const balance = await contract.balanceOf(account);
-  return Token.create({
-    logo: "",
+  return TokenModel.create({
     symbol: await contract.symbol(),
     name: await contract.name(),
     amount: balance.toString(),
@@ -32,10 +22,19 @@ const createToken = async (address: string, abi: any, account: string): Promise<
   })
 }
 
+export const TokenModel = types
+  .model("TokenModel", {
+    symbol: types.string,
+    name: types.string,
+    amount: types.string,
+    usd: types.number,
+  });
+
+
 export const WalletModel = types
   .model("WalletModel", {
     address: types.optional(types.string, ""),
-    tokens: types.array(Token),
+    tokens: types.array(TokenModel),
   })
   .actions((wallet) => ({
     setAddress(address) {
@@ -43,7 +42,7 @@ export const WalletModel = types
       wallet.address = address;
     },
 
-    setTokens(tokenList: typeof Token[]) {
+    setTokens(tokenList: typeof TokenModel[]) {
       wallet.tokens.push(...tokenList);
     },
 
@@ -67,12 +66,14 @@ export const WalletModel = types
       }
     },
 
-    isConnected() {
-      return wallet.address !== "";
-    },
-
     async disconnect() {
       wallet.address = "";
+      wallet.tokens = [];
+    },
+  }))
+  .views( (wallet) => ({
+    isConnected() {
+      return wallet.address !== "";
     },
 
     getAliasAccount(): string {
@@ -87,13 +88,3 @@ export const WalletModel = types
       return wallet.tokens;
     },
   }));
-
-export
-
-let walletMemory;
-export const useWallet = () => {
-  if(!walletMemory) {
-    walletMemory = WalletModel.create({});
-  }
-  return walletMemory;
-}
