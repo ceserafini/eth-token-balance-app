@@ -1,5 +1,5 @@
 import './Home.scss';
-import { Layout, PageHeader } from 'antd';
+import { Layout, PageHeader, Typography, Space } from 'antd';
 import { Content, Footer } from 'antd/lib/layout/layout';
 import { observer } from "mobx-react-lite";
 import { useWallet } from '../../context/WalletStore';
@@ -8,11 +8,13 @@ import Logo  from '../../assets/blockchain.png';
 import CardBalance from '../../components/card/CardBalance';
 import CardTokenContainer from '../../components/card/CardTokenContainer';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // eslint-disable-next-line react/display-name
 const Home = observer((): JSX.Element => {
   const [tokenList, setTokenList] = useState([]);
   const wallet = useWallet();
+  const { Text, Link } = Typography;
 
   useEffect(() => {
     setTokenList(wallet.getTokens());
@@ -23,7 +25,6 @@ const Home = observer((): JSX.Element => {
     <Layout>
       <PageHeader
         ghost={false}
-        onBack={() => window.history.back()}
         avatar={{src: Logo, shape: 'square' }}
         extra={<Connector />}
       />
@@ -35,7 +36,14 @@ const Home = observer((): JSX.Element => {
         </>}
       </Content>
 
-      <Footer className='text-center fixed-to-bottom'>Membrane FrontEnd Challenge ©2022 Created by Cecilia Serafini</Footer>
+      <Footer className='text-center fixed-to-bottom'>
+      <Space direction="vertical">
+          <Text type="secondary">Membrane Frontend Challenge ©2022</Text>
+          <Text type="secondary">
+            Created by <Link href="https://github.com/ceserafini/eth-token-balance-app" target="_blank"> Cecilia Serafini</Link>
+          </Text>
+      </Space>
+      </Footer>
     </Layout>
   )
 });

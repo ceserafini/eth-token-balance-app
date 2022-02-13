@@ -4,7 +4,7 @@ pragma solidity ^0.8.4;
 import "hardhat/console.sol";
 
 contract TokenUSDC {
-  string public name = "Token USDC - Sandbox";
+  string public name = "Coin";
   string public symbol = "USDC";
   uint public totalSupply = 99001;
   address public owner;

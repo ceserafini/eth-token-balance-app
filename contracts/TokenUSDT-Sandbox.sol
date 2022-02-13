@@ -4,7 +4,7 @@ pragma solidity ^0.8.4;
 import "hardhat/console.sol";
 
 contract TokenUSDT {
-  string public name = "Token USDT - Sandbox";
+  string public name = "Tether";
   string public symbol = "USDT";
   uint public totalSupply = 122032;
   address public owner;
