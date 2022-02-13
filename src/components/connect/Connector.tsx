@@ -1,7 +1,8 @@
-import { Alert, Button, Dropdown, Menu, Spin } from "antd";
+import { Alert, Button, Dropdown, Menu, Modal, Spin } from "antd";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-import { useWallet } from "../../context/WalletStore"
+import { useWallet } from "../../context/WalletStore";
+import './Connector.scss';
 
 // eslint-disable-next-line react/display-name
 const Connector = observer((): JSX.Element => {
@@ -34,6 +35,7 @@ const Connector = observer((): JSX.Element => {
   }
 
   return <>
+
     {isConnected
       ? <Dropdown overlay={
         <Menu>
@@ -44,14 +46,11 @@ const Connector = observer((): JSX.Element => {
       </Dropdown>
       : <Button key="2" type="default" onClick={startConnection}>Log in with MetaMask</Button>
     }
-    {visible && <Alert
-      message={'Connection Error'}
-      description={errorMessage}
-      type="error"
-      closable
-      onClose={() => setVisible(false)}
-      style={{ position: 'absolute', right: 0, left: 0, marginLeft: 'auto', marginRight: 'auto', width: '60%' }}
-    />}
+
+    <Modal title="Oups! Something was wrong" visible={visible} onOk={() => setVisible(false)}>
+      <p>{errorMessage}</p>
+    </Modal>
+
   </>
 });
 

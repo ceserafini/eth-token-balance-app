@@ -35,22 +35,22 @@
 @keyframes welcome
 {
   0% {
-    top:0em;
+    top:0vh;
     transform: scale3d(0.9, 0.9, 0.9)
   }
   
   25% {
-    top:13em;
+    top: calc(50vh - 50px);
     transform: scale3d(1, 1, 1)
   }
 
   50% {
-    top:13em;
+    top: calc(25vh - 50px);
     transform: scale3d(1.1, 1.1, 1.1)
   }
 
   75%, 100% {
-    top:13em;
+    top: calc(25vh - 50px);
     transform: scale3d(1, 1, 1)
   }
 }
@@ -58,22 +58,22 @@
 @-webkit-keyframes welcome 
 {
   0% {
-    top:0em;
+    top:0vh;
     transform: scale3d(0.9, 0.9, 0.9)
   }
   
   25% {
-    top:11em;
+    top: calc(50vh - 50px);
     transform: scale3d(1, 1, 1)
   }
 
   50% {
-    top:11em;
+    top: calc(25vh - 50px);
     transform: scale3d(1.1, 1.1, 1.1)
   }
 
   75%, 100% {
-    top:11em;
+    top: calc(25vh - 50px);
     transform: scale3d(1, 1, 1)
   }
 }

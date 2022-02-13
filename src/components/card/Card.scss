@@ -1,3 +1,5 @@
+@import './themes/Colors.scss';
+
 .col-token-logo {
   display: flex;
   flex-direction: column;
@@ -9,8 +11,23 @@
   flex-direction: column;
   gap: 1em;
   padding: 1em;
-  background: #f0f0f0;
+  background: $back;
   margin-top: -80px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    max-width: 720px;
+  }
+
+  @media (min-width: 992px) {
+    max-width: 960px;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1140px;
+  }
 }
 
 .card-token-balance {
@@ -19,7 +36,7 @@
 }
 
 .card-usd-balance {
-  background: #00b2cc;;
+  background: $primary;
   border: none;
   color: #f5f5f5;
   padding-bottom: 80px;
