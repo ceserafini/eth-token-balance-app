@@ -6,7 +6,7 @@ import "hardhat/console.sol";
 contract TokenUSDC {
   string public name = "Coin";
   string public symbol = "USDC";
-  uint public totalSupply = 99001;
+  uint public totalSupply = 5;
   address public owner;
   mapping(address => uint) balances;
 

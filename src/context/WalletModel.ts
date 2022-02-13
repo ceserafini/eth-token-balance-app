@@ -18,9 +18,8 @@ const createToken = async (address: string, abi: any, account: string): Promise<
   const symbol = await contract.symbol();
   const name = await contract.name();
   const amount = balance.toString();
-  // const currentMarketPrice = await getMarketPrice(symbol);
-  // const usd = Number(amount)*Number(currentMarketPrice.lastTradeRate);
-  const usd = Number(amount)*Number(150);
+  const currentMarketPrice = await getMarketPrice(symbol);
+  const usd = Number(amount)*Number(currentMarketPrice.lastTradeRate);
 
   return TokenModel.create({
     symbol,
@@ -43,6 +42,7 @@ export const WalletModel = types
   .model("WalletModel", {
     address: types.optional(types.string, ""),
     tokens: types.array(TokenModel),
+    connecting: false,
   })
   .actions((wallet) => ({
     setAddress(address) {
@@ -54,7 +54,12 @@ export const WalletModel = types
       wallet.tokens.push(...tokenList);
     },
 
+    setConnecting(connecting) {
+      wallet.connecting = connecting;
+    },
+
     async connect() {
+      wallet.setConnecting(true);
       try {
         if (window.ethereum) {
           const addresses = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -71,6 +76,9 @@ export const WalletModel = types
         }
       } catch(e) {
         console.log(e);
+        throw e;
+      } finally {
+        wallet.setConnecting(false);
       }
     },
 
@@ -80,6 +88,10 @@ export const WalletModel = types
     },
   }))
   .views( (wallet) => ({
+    isConnecting() {
+      return wallet.connecting;
+    },
+
     isConnected() {
       return wallet.address !== "";
     },

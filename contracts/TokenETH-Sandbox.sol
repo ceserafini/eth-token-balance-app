@@ -6,7 +6,7 @@ import "hardhat/console.sol";
 contract TokenETH {
   string public name = "Ether";
   string public symbol = "ETH";
-  uint public totalSupply = 100254;
+  uint public totalSupply = 12;
   address public owner;
   mapping(address => uint) balances;
 

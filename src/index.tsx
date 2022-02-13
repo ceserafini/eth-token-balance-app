@@ -4,10 +4,13 @@ import './index.scss';
 import './antd.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider, walletStore } from './context/WalletStore';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider value={walletStore}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
