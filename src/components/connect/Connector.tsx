@@ -44,7 +44,7 @@ const Connector = observer((): JSX.Element => {
       : <Button key="2" type="default" onClick={startConnection}>Log in with MetaMask</Button>
     }
 
-    <Modal title="Oups! Something was wrong" visible={visible} onCancel={() => setVisible(false)} footer={null}>
+    <Modal title="Oops, something went wrong!" visible={visible} onCancel={() => setVisible(false)} footer={null}>
       <p>{errorMessage}</p>
     </Modal>
   </>
