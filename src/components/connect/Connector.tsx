@@ -17,7 +17,6 @@ const Connector = observer((): JSX.Element => {
   }, [wallet]);
 
   const startConnection = async () => {
-    // TODO: show loader
     try {
       await wallet.connect();
       setIsConnected(true);
@@ -25,7 +24,6 @@ const Connector = observer((): JSX.Element => {
       setErrorMessage(e.message);
       setVisible(true);
     }
-    // TODO: hide loader
   }
 
   const startDisconnection = () => {
@@ -35,7 +33,6 @@ const Connector = observer((): JSX.Element => {
   }
 
   return <>
-
     {isConnected
       ? <Dropdown overlay={
         <Menu>
@@ -50,7 +47,6 @@ const Connector = observer((): JSX.Element => {
     <Modal title="Oups! Something was wrong" visible={visible} onCancel={() => setVisible(false)} footer={null}>
       <p>{errorMessage}</p>
     </Modal>
-
   </>
 });
 

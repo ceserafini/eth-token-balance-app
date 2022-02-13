@@ -10,12 +10,8 @@ export const getMarketPrice = async (symbol: string): Promise<MarketPriceDTO> =>
       'Content-Type': 'application/json',
     }
   })
-    .then((response: AxiosResponse) => {
-      return response.data;
-
-    })
+    .then((response: AxiosResponse) => response.data)
     .catch((error: AxiosError) => {
       throw new Error(`${error.response?.data.message}`);
     });
-
-  }
+}

@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 import { Card } from "antd"
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
 import { useWallet } from "../../context/WalletStore";
 
 const CardBalance = observer(() => {
