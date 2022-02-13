@@ -4,7 +4,7 @@ pragma solidity ^0.8.4;
 import "hardhat/console.sol";
 
 contract TokenETH {
-  string public name = "Token ETH - Sandbox";
+  string public name = "Ether";
   string public symbol = "ETH";
   uint public totalSupply = 100254;
   address public owner;

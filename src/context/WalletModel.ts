@@ -8,17 +8,25 @@ import TokenUSDT from '../artifacts/contracts/TokenUSDT-Sandbox.sol/TokenUSDT.js
 const TokenUSDTAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 import TokenUSDC from '../artifacts/contracts/TokenUSDC-Sandbox.sol/TokenUSDC.json'
+import { getMarketPrice } from "../services/service";
 const TokenUSDCAddress = '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0';
 
 const createToken = async (address: string, abi: any, account: string): Promise<any> => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const contract = new ethers.Contract(address, abi, provider)
+  const contract = new ethers.Contract(address, abi, provider);
   const balance = await contract.balanceOf(account);
+  const symbol = await contract.symbol();
+  const name = await contract.name();
+  const amount = balance.toString();
+  // const currentMarketPrice = await getMarketPrice(symbol);
+  // const usd = Number(amount)*Number(currentMarketPrice.lastTradeRate);
+  const usd = Number(amount)*Number(150);
+
   return TokenModel.create({
-    symbol: await contract.symbol(),
-    name: await contract.name(),
-    amount: balance.toString(),
-    usd: 0, // find value from bittrex api
+    symbol,
+    name,
+    amount,
+    usd, // bittrex api
   })
 }
 
