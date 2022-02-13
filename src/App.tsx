@@ -1,9 +1,12 @@
+import { Provider, walletStore } from './context/WalletStore';
 import PagesNavigation from './pages/pages.navigation';
 
 function App() {
 
   return (
-    <PagesNavigation />
+    <Provider value={walletStore}>
+      <PagesNavigation />
+    </Provider>
   );
 }
 
