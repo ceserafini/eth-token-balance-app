@@ -1,4 +1,4 @@
-import { Alert, Button, Dropdown, Menu, Modal, Spin } from "antd";
+import { Button, Dropdown, Menu, Modal } from "antd";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useWallet } from "../../context/WalletStore";
@@ -47,7 +47,7 @@ const Connector = observer((): JSX.Element => {
       : <Button key="2" type="default" onClick={startConnection}>Log in with MetaMask</Button>
     }
 
-    <Modal title="Oups! Something was wrong" visible={visible} onOk={() => setVisible(false)}>
+    <Modal title="Oups! Something was wrong" visible={visible} onCancel={() => setVisible(false)} footer={null}>
       <p>{errorMessage}</p>
     </Modal>
 
