@@ -6,7 +6,7 @@ import "hardhat/console.sol";
 contract TokenUSDT {
   string public name = "Tether";
   string public symbol = "USDT";
-  uint public totalSupply = 3568;
+  uint public totalSupply = 3;
   address public owner;
   mapping(address => uint) balances;
 

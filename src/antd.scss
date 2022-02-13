@@ -1,17 +1,18 @@
 @import '~antd/dist/antd.css';
+@import './themes/Colors.scss';
 
 .ant-btn:hover, .ant-btn:focus {
-  color: #00b2cc;
-  border-color: #00b2cc;
+  color: $primary;
+  border-color: $primary;
 }
 
 .ant-layout-footer {
   width: 100%;
-  background: #fff;
+  background: $white;
 }
 
 .site-layout {
-  background: #f0f0f0 !important;
+  background: $back !important;
   height: calc(100vh - 72px - 92px) !important;
 }
 

@@ -24,7 +24,7 @@ const CardTokenBalance = observer(({ token }: any):JSX.Element => {
         </Col>
         <Col className='col-4 text-right'>
           <div className='h4'>{token.amount}</div>
-          <div className='h5'>$ {token.usd}</div>
+          <div className='h5'>$ {token.usd.toFixed(2)}</div>
         </Col>
       </Row>
     </Card>
