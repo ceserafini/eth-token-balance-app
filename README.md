@@ -63,7 +63,8 @@ Now is time to run the aplication! Open another new terminal, and just run `npm 
 
 Fantastic! If everything works fine at this point you will see the screen, now you just have to connect and then you will be able to see the tokens.
 
-https://user-images.githubusercontent.com/59506131/153770131-eafb89ec-8821-4ea4-9e9e-4d0412c1772d.mp4
+https://user-images.githubusercontent.com/59506131/153772373-2abf36c1-02c8-4599-a55b-dec4885ab3c4.mp4
+
 
 ```
 Membrabe Frontend Challenge 2022
