@@ -9,6 +9,9 @@ const TokenUSDTAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 import TokenUSDC from '../artifacts/contracts/TokenUSDC-Sandbox.sol/TokenUSDC.json'
 import { getMarketPrice } from "../services/service";
+import { waitingReject } from "../utils/threading";
+import TimeoutException from "../exceptions/TimeOutException";
+import { InternalException } from "../exceptions/InternalException";
 const TokenUSDCAddress = '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0';
 
 const createToken = async (address: string, abi: any, account: string): Promise<any> => {
@@ -59,24 +62,30 @@ export const WalletModel = types
     },
 
     async connect() {
+      if (!window.ethereum) {
+        console.log('Need to install MetaMask');
+        throw new Error('Please install MetaMask browser extension to interact');
+      }
       wallet.setConnecting(true);
       try {
-        if (window.ethereum) {
-          const addresses = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          console.log("Provider List: ", addresses);
-          wallet.setAddress(addresses[0]);
-          wallet.setTokens(await Promise.all([
-            createToken(TokenETHAddress, TokenETH.abi, wallet.address),
-            createToken(TokenUSDTAddress, TokenUSDT.abi, wallet.address),
-            createToken(TokenUSDCAddress, TokenUSDC.abi, wallet.address),
-          ]));
-        } else {
-          console.log('Need to install MetaMask');
-          throw new Error('Please install MetaMask browser extension to interact');
-        }
+        const addresses = await Promise.race([
+          window.ethereum.request({ method: 'eth_requestAccounts' }),
+          waitingReject("It seems that the connection is taking a long time. Please try again or check the connection in MetaMask.", 15000)
+        ]);
+
+        console.log("Provider List: ", addresses);
+        wallet.setAddress(addresses[0]);
+        wallet.setTokens(await Promise.all([
+          createToken(TokenETHAddress, TokenETH.abi, wallet.address),
+          createToken(TokenUSDTAddress, TokenUSDT.abi, wallet.address),
+          createToken(TokenUSDCAddress, TokenUSDC.abi, wallet.address),
+        ]));
       } catch(e) {
-        console.log(e);
-        throw e;
+        console.log("EXCEPTION:", e);
+        if (e instanceof TimeoutException) {
+          throw e;
+        }
+        throw e; // TODO: check error
       } finally {
         wallet.setConnecting(false);
       }
@@ -104,7 +113,7 @@ export const WalletModel = types
       return wallet.tokens.reduce((acc, token) => acc + token.usd, 0);
     },
 
-    getTokens(): Token[] {
+    getTokens(): TokenModel[] {
       return wallet.tokens;
     },
   }));

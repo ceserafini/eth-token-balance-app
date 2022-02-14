@@ -37,7 +37,7 @@ const Home = observer((): JSX.Element => {
             <Image
                 width={200}
                 src={Logo}
-                className={"logo-animation"}
+                className={"logo-animation center"}
               />
         </div>
         }
@@ -53,6 +53,7 @@ const Home = observer((): JSX.Element => {
       </Footer>
 
       {wallet.isConnecting() && <Spin size="large"/>}
+
     </Layout>
   )
 });
